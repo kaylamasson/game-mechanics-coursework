@@ -10,15 +10,20 @@ public class MovePlayer : MonoBehaviour
 
     public string left;
     public string right; 
+    public string down; 
+    public string up;
     public string jump; 
+
+    public float speed;
 
     private bool isFacingRight = true; 
 
     private float horizontalInput; 
 
-
     public Animator animator; 
     public bool isJumping = false; 
+
+    public bool isCrouching; 
 
 
     public Rigidbody2D rb; 
@@ -40,34 +45,56 @@ public class MovePlayer : MonoBehaviour
 
         Vector3 move = new Vector3(0,0,0);
 
+        //if character is moving
+        // play walk animation
         if (horizontalInput != 0)
         {
             animator.SetBool("isWalking",true);
-        } else 
+        }  else 
         {
             animator.SetBool("isWalking",false);
         }
 
+
+        // move character based on keyboard input
         if (Input.GetKey(left))
         {
-            move = new Vector3(-0.02f, 0, 0);
+            move = new Vector3(-speed, 0, 0);
+            animator.SetBool("isCrouching",false); 
+
         }
 
         if (Input.GetKey(right))
         {
-            move = new Vector3(0.02f, 0, 0);
+            move = new Vector3(speed, 0, 0);
+            animator.SetBool("isCrouching",false); 
         }
 
+        if (Input.GetKey(up))
+        {
+            animator.SetBool("isCrouching",false); 
+        }
+
+        if (Input.GetKey(down))
+        {
+            isCrouching = true; 
+            animator.SetBool("isCrouching",true); 
+        }
+
+
+        //jump is space key pressed and character is on ground
         if (Input.GetKey(jump) && isJumping == false)
         {
-
+            animator.SetBool("isJumping", true);
             animator.SetBool("isWalking",false);
             isJumping = true;
-            rb.AddForce(this.transform.up * 1500);
+            rb.AddForce(this.transform.up * 2000);
         }
 
+        //move character
         this.transform.Translate(move);
         
+        //make character face direction of movement
         FlipSprite();
     }
 
@@ -89,5 +116,8 @@ public class MovePlayer : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         isJumping = false;
+        animator.SetBool("isCrouching",false);
+        animator.SetBool("isWalking",false);
+        animator.SetBool("isJumping", false);
     }
 }
