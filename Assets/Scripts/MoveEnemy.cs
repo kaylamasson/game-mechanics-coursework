@@ -6,6 +6,7 @@ using System;
 public class MoveEnemy : MonoBehaviour
 {
 
+
     public float startPoint;
     public float endPoint;
     private float xPos;
@@ -34,10 +35,10 @@ public class MoveEnemy : MonoBehaviour
 
 
 
-    if((Math.Round(endPoint,2) == Math.Round(xPos,2)) && (!reachedEdge))
+    if((Math.Round(endPoint,3) == Math.Round(xPos,3)) && (reachedEdge == false))
     {
-        FlipSprite();
         reachedEdge = true;
+        FlipSprite();
         isFacingRight = true;
     }
 
@@ -55,20 +56,13 @@ public class MoveEnemy : MonoBehaviour
 
     
     
-    if ((Math.Round(startPoint,2) == Math.Round(xPos,2)) && (!reachedEdge))
+    if ((Math.Round(startPoint,2) == Math.Round(xPos,2)) && (reachedEdge == false))
     {
-        FlipSprite();
         reachedEdge = true;
+        //sprite flipping 3x ?
+        FlipSprite();
         isFacingRight = false;
     }
-
-
-/*
-    if (reachedEdge == true){
-        FlipSprite();
-    }
-
-    */
     
     }
 
