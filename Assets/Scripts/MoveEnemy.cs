@@ -13,6 +13,8 @@ public class MoveEnemy : MonoBehaviour
     public bool isFacingRight = false;  
     private Animator animator; 
     private bool reachedEdge; 
+    private float animTime;
+    private bool isHit; 
     // Start is called before the first frame update
     void Start()
     {
@@ -23,25 +25,20 @@ public class MoveEnemy : MonoBehaviour
     void Update()
     {
 
-    //Debug.Log(isFacingRight);
-    //Debug.Log(xPos);
     xPos = this.transform.position.x;
+
+
+    
 
     if ((endPoint < xPos) && (isFacingRight == false))
     {
         animator.SetBool("isWalking",true);
-        this.transform.Translate(-0.005f,0,0);
-        reachedEdge = false;
-
+        this.transform.Translate(-0.003f,0,0);
+        reachedEdge = false; 
     }
 
-
-
-    if((Math.Round(endPoint,3) == Math.Round(xPos,3)) && (reachedEdge == false))
-    {
-        //Debug.Log(Math.Round(endPoint,3));
-        //Debug.Log(Math.Round(xPos,3));
-        //Debug.Log("At edge"); 
+    if((Math.Round(endPoint,3) >= Math.Round(xPos,3)) && (reachedEdge == false))
+    { 
         reachedEdge = true;
         FlipSprite();
         isFacingRight = true;
@@ -54,28 +51,53 @@ public class MoveEnemy : MonoBehaviour
     if ((startPoint > xPos) && (isFacingRight == true))
     {
         animator.SetBool("isWalking",true);
-        this.transform.Translate(0.005f,0,0);
+        this.transform.Translate(0.003f,0,0);
         reachedEdge = false;
 
     }
 
     
     
-    if ((Math.Round(startPoint,2) == Math.Round(xPos,2)) && (reachedEdge == false))
+    if ((Math.Round(startPoint,2) <= Math.Round(xPos,2)) && (reachedEdge == false))
     {
         reachedEdge = true;
         //sprite flipping 3x ?
         FlipSprite();
         isFacingRight = false;
+
+    }
+
+    if (isHit)
+    {
+        animTime ++;
+        if (animTime > 2) 
+        {
+            animator.SetBool("isHit",false);
+            isHit = false;
+        }
     }
     
+    
+
     }
 
     void FlipSprite()
     {
-        //Debug.Log("Sprite flipped");
         Vector3 ls = this.transform.localScale;
         ls.x *= -1;
         this.transform.localScale = ls;
     }
+
+    
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Projectile")
+        {
+            isHit = true;
+            animator.SetBool("isHit",true);
+        }
+    }
+   
+    
 }

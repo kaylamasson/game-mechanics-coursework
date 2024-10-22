@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7505436707984758939}
   - component: {fileID: 4254713119323801126}
   - component: {fileID: -2676040321450981252}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: seed
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seedSpeed: 0.2
+  gsm: {fileID: 0}
 --- !u!70 &-2676040321450981252
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
