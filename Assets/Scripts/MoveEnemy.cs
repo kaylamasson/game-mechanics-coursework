@@ -10,7 +10,7 @@ public class MoveEnemy : MonoBehaviour
     public float startPoint;
     public float endPoint;
     private float xPos;
-    private bool isFacingRight = false;  
+    public bool isFacingRight = false;  
     private Animator animator; 
     private bool reachedEdge; 
     // Start is called before the first frame update
@@ -23,6 +23,8 @@ public class MoveEnemy : MonoBehaviour
     void Update()
     {
 
+    //Debug.Log(isFacingRight);
+    //Debug.Log(xPos);
     xPos = this.transform.position.x;
 
     if ((endPoint < xPos) && (isFacingRight == false))
@@ -37,6 +39,9 @@ public class MoveEnemy : MonoBehaviour
 
     if((Math.Round(endPoint,3) == Math.Round(xPos,3)) && (reachedEdge == false))
     {
+        //Debug.Log(Math.Round(endPoint,3));
+        //Debug.Log(Math.Round(xPos,3));
+        //Debug.Log("At edge"); 
         reachedEdge = true;
         FlipSprite();
         isFacingRight = true;
@@ -68,7 +73,7 @@ public class MoveEnemy : MonoBehaviour
 
     void FlipSprite()
     {
-        Debug.Log("Sprite flipped");
+        //Debug.Log("Sprite flipped");
         Vector3 ls = this.transform.localScale;
         ls.x *= -1;
         this.transform.localScale = ls;

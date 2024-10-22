@@ -13,10 +13,13 @@ public class MovePlayer : MonoBehaviour
     public string down; 
     public string up;
     public string jump; 
+    public GameObject seedPrefab; 
+    public string throwSeed; 
+    private float lastThrown; 
 
     public float speed;
 
-    private bool isFacingRight = true; 
+    public bool isFacingRight = true; 
 
     private float horizontalInput; 
 
@@ -89,6 +92,18 @@ public class MovePlayer : MonoBehaviour
             animator.SetBool("isWalking",false);
             isJumping = true;
             rb.AddForce(this.transform.up * 2000);
+        }
+
+        GameObject tmpSeed; 
+
+        if (Input.GetKey(throwSeed))
+        {
+            if (Time.time > lastThrown + 1)
+            {
+                tmpSeed = Instantiate(seedPrefab, transform.position, transform.rotation); 
+                lastThrown = Time.time;
+            }
+
         }
 
         //move character
